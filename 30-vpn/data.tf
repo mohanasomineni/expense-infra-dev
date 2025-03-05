@@ -1,20 +1,21 @@
 data "aws_ami" "openvpn" {
-    most_recent     = true
-    owners          = ["679593333241"]     
-    filter {
-        name   = "name"
-        values = ["Openvpn Acces Server Community Image-fe8020db-*"]
-    }
- 
-    filter {
-        name   = "root-device-type"
-        values = ["ebs"]
-    }
+  most_recent = true
+  owners = ["679593333241"]
 
-    filter {
-        name   = "virtualization-type"
-        values = ["hvm"]
-    }
+  filter {
+    name = "name"
+    values = ["Openvpn Acces Server Community Image-fe8020db-*"]
+  }
+
+  filter {
+    name = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name = "virtualization-type"
+    values = ["hvm"]
+  }
 }
 
 data "aws_ssm_parameter" "vpn_sg_id" {
