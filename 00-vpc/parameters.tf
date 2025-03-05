@@ -5,7 +5,7 @@ resource "aws_ssm_parameter" "vpc_id" {
 }
 
 resource "aws_ssm_parameter" "public_subnet_ids" {
-  name  = "/expense/dev/public_subnet_ids"
+  name  = "/${var.project_name}/${var.environment}/public_subnet_ids"
   type  = "StringList"
   value = join(",", module.vpc.public_subnet_ids)
 
@@ -17,7 +17,7 @@ resource "aws_ssm_parameter" "public_subnet_ids" {
 }
 
 resource "aws_ssm_parameter" "private_subnet_ids" {
-  name  = "/expense/dev/private_subnet_ids"
+  name  = "/${var.project_name}/${var.environment}/private_subnet_ids"
   type  = "StringList"
   value = join(",", module.vpc.private_subnet_ids)
 
@@ -30,7 +30,7 @@ resource "aws_ssm_parameter" "private_subnet_ids" {
 
 
 resource "aws_ssm_parameter" "database_subnet_ids" {
-  name  = "/expense/dev/database_subnet_ids"
+  name  = "/${var.project_name}/${var.environment}/database_subnet_ids"
   type  = "StringList"
   value = join(",", module.vpc.database_subnet_ids)
 
@@ -39,4 +39,10 @@ resource "aws_ssm_parameter" "database_subnet_ids" {
   }
 
   depends_on = [aws_ssm_parameter.vpc_id]  # Ensures vpc_id is updated first
+}
+
+resource "aws_ssm_parameter" "database_subnet_group_name" {
+  name  = "/${var.project_name}/${var.environment}/database_subnet_group_name"
+  type  = "String"
+  value = aws_db_subnet_group.expense.name
 }
